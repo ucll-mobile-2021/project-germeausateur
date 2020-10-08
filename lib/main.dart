@@ -36,7 +36,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('First Route'),
+        title: Text('Welkom'),
       ),
       body: Center(
         child: Container(
@@ -44,23 +44,23 @@ class MyHomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               RaisedButton(
-                child: Text('Open route'),
+                child: Text('Klant'),
                 onPressed: () {
                   Navigator.push(
-                context,
-              MaterialPageRoute(builder: (context) => SecondRoute()),
-            );
-          },
-        ),
-        RaisedButton(
-                child: Text('Open route'),
+                    context,
+                    MaterialPageRoute(builder: (context) => Klant()),
+                  );
+                },
+              ),
+              RaisedButton(
+                child: Text('Uitbater'),
                 onPressed: () {
                   Navigator.push(
-                context,
-              MaterialPageRoute(builder: (context) => SecondRoute()),
-            );
-          },
-        ),
+                    context,
+                    MaterialPageRoute(builder: (context) => Orders()),
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -69,12 +69,73 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class SecondRoute extends StatelessWidget {
+class Klant extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second Route"),
+        title: Text("Tafel vermelding"),
+      ),
+      body: new Center(
+        child: new TextField(
+          style: new TextStyle(
+              fontSize: 12.0,
+              color: const Color(0xFF000000),
+              fontWeight: FontWeight.w200,
+              fontFamily: "Roboto"),
+        ),
+      ),
+    );
+  }
+}
+
+class Orders extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Incoming orders"),
+      ),
+      body: new ListView(
+        padding: const EdgeInsets.all(8),
+        children: <Widget>[
+          ListTile(
+            title: Text(
+              '#0705650',
+              style: new TextStyle(
+                fontSize: 20.0,
+                color: Colors.black,
+              ),
+            ),
+            leading: Text(
+              '1',
+              style: new TextStyle(
+                fontSize: 20.0,
+                color: Colors.black,
+              ),
+            ),
+            trailing: new IconButton(
+              icon: const Icon(Icons.arrow_drop_down),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OrderDetails()),
+                );
+              },
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class OrderDetails extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Order Details"),
       ),
       body: Center(
         child: RaisedButton(
@@ -87,4 +148,3 @@ class SecondRoute extends StatelessWidget {
     );
   }
 }
-
