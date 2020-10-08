@@ -39,14 +39,30 @@ class MyHomePage extends StatelessWidget {
         title: Text('First Route'),
       ),
       body: Center(
-        child: RaisedButton(
-          child: Text('Open route'),
-          onPressed: () {
-            Navigator.push(
-              context,
+        child: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              RaisedButton(
+                child: Text('Open route'),
+                onPressed: () {
+                  Navigator.push(
+                context,
               MaterialPageRoute(builder: (context) => SecondRoute()),
             );
           },
+        ),
+        RaisedButton(
+                child: Text('Open route'),
+                onPressed: () {
+                  Navigator.push(
+                context,
+              MaterialPageRoute(builder: (context) => SecondRoute()),
+            );
+          },
+        ),
+            ],
+          ),
         ),
       ),
     );
