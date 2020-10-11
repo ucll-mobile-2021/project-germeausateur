@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:germeau_sateur/screens/OrderDetails.dart';
+import 'package:germeau_sateur/screens/OrderScreen.dart';
+import 'package:germeau_sateur/screens/SelectTableScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -63,86 +66,6 @@ class MyHomePage extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class Klant extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Tafel vermelding"),
-      ),
-      body: new Center(
-        child: new TextField(
-          style: new TextStyle(
-              fontSize: 12.0,
-              color: const Color(0xFF000000),
-              fontWeight: FontWeight.w200,
-              fontFamily: "Roboto"),
-        ),
-      ),
-    );
-  }
-}
-
-class Orders extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Incoming orders"),
-      ),
-      body: new ListView(
-        padding: const EdgeInsets.all(8),
-        children: <Widget>[
-          ListTile(
-            title: Text(
-              '#0705650',
-              style: new TextStyle(
-                fontSize: 20.0,
-                color: Colors.black,
-              ),
-            ),
-            leading: Text(
-              '1',
-              style: new TextStyle(
-                fontSize: 20.0,
-                color: Colors.black,
-              ),
-            ),
-            trailing: new IconButton(
-              icon: const Icon(Icons.arrow_drop_down),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => OrderDetails()),
-                );
-              },
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class OrderDetails extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Order Details"),
-      ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Go back!'),
         ),
       ),
     );
