@@ -8,14 +8,31 @@ class Klant extends StatelessWidget {
         title: Text("Tafel vermelding"),
       ),
       body: new Center(
-        child: new TextField(
-          decoration: InputDecoration(
-              border: InputBorder.none, hintText: 'Vul hier uw tafelnummer in'),
-          style: new TextStyle(
-              fontSize: 20.0,
-              color: const Color(0xFF000000),
-              fontWeight: FontWeight.w400,
-              fontFamily: "Roboto"),
+        child: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              new TextField(
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Vul hier uw tafelnummer in'),
+                style: new TextStyle(
+                    fontSize: 20.0,
+                    color: const Color(0xFF000000),
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Roboto"),
+              ),
+              RaisedButton(
+                child: Text('Confirm'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Klant()),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
