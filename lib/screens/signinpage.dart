@@ -3,7 +3,7 @@ import 'package:germeau_sateur/authentication_service.dart';
 import 'package:germeau_sateur/screens/registerpage.dart';
 import 'package:provider/provider.dart';
 
-class SignInPage extends StatelessWidget{
+class SignInPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -11,6 +11,7 @@ class SignInPage extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextField(
             controller: emailController,
@@ -30,11 +31,11 @@ class SignInPage extends StatelessWidget{
           RaisedButton(
             onPressed: () {
               context.read<AuthenticationService>().signIn(
-                email: emailController.text.trim(),
-                password: passwordController.text.trim(),
-              );
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+                  );
             },
-            child: Text('Sing in'),
+            child: Text('Sign in'),
           ),
           RaisedButton(
             onPressed: () {
@@ -49,5 +50,4 @@ class SignInPage extends StatelessWidget{
       ),
     );
   }
-
 }
