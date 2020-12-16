@@ -19,7 +19,10 @@ class AuthenticationService {
           return e.message;
       }
   }
-  Future<String> signUp({String email, String password}) async{
+  Future<String> signUp({String email, String password, String confirmPassword}) async{
+    if(password != confirmPassword){
+      return "Passwords don't match";
+    }
       try{
         await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
         return "Signed up";
@@ -27,4 +30,5 @@ class AuthenticationService {
           return e.message;
       }
   }
+  
 }

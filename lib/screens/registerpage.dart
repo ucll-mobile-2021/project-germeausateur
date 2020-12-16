@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:germeau_sateur/authentication_service.dart';
-import 'package:germeau_sateur/screens/registerpage.dart';
 import 'package:provider/provider.dart';
 
-class SignInPage extends StatelessWidget{
+class RegisterPage extends StatelessWidget{
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController password2Controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,24 +27,26 @@ class SignInPage extends StatelessWidget{
             autocorrect: false,
             enableSuggestions: false,
           ),
-          RaisedButton(
-            onPressed: () {
-              context.read<AuthenticationService>().signIn(
-                email: emailController.text.trim(),
-                password: passwordController.text.trim(),
-              );
-            },
-            child: Text('Sing in'),
+          TextField(
+            controller: password2Controller,
+            decoration: InputDecoration(
+              labelText: 'Confirm password',
+            ),
+            obscureText: true,
+            autocorrect: false,
+            enableSuggestions: false,
           ),
           RaisedButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RegisterPage()),
+              context.read<AuthenticationService>().signUp(
+                email: emailController.text.trim(),
+                password: passwordController.text.trim(),
+                confirmPassword: password2Controller.text.trim(),
               );
+              
             },
             child: Text('Register'),
-          )
+          ),
         ],
       ),
     );
