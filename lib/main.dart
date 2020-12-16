@@ -1,7 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:germeau_sateur/authentication_service.dart';
+import 'package:germeau_sateur/screens/homepage.dart';
+import 'package:germeau_sateur/screens/signinpage.dart';
+import 'package:provider/provider.dart';
 
 
-void main() {
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -9,26 +17,43 @@ class MyApp extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return MultiProvider(
+    providers: [
+      Provider<AuthenticationService>(
+        create: (_) => AuthenticationService(FirebaseAuth.instance),
+      ),
+
+      StreamProvider(
+        create: (context) => context.read<AuthenticationService>().authStateChanges)
+    ],
+    child: MaterialApp(
+      title: 'BIER',
       theme: ThemeData(
-        
         primarySwatch: Colors.blue,
-        
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      home: AutenticationWrapper(),
+    ),
     );
+  }
+}
+      
+class AutenticationWrapper extends StatelessWidget{
+
+  const AutenticationWrapper({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final firebaseuser = context.watch<User>();
+    if(firebaseuser != null){
+      return HomePage();
+    }
+    return SignInPage();
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('hello.')
-      ),
-    );
-  }
-}
+
+
+
