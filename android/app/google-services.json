@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1055049382633",
+    "firebase_url": "https://germeausateur.firebaseio.com",
+    "project_id": "germeausateur",
+    "storage_bucket": "germeausateur.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055049382633:android:149faee7c5bc81ab54ce78",
+        "android_client_info": {
+          "package_name": "com.example.germeau_sateur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1055049382633-6ijjqmlmin48ncuohnvq508ss6fjtbmd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXQD4zv8S_-uQjUWj-bBy_x7FNLOdFzzc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1055049382633-6ijjqmlmin48ncuohnvq508ss6fjtbmd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
