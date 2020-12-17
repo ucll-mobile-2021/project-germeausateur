@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:germeau_sateur/authentication_service.dart';
-//import 'package:germeau_sateur/screens/createbarpage.dart';
+import 'package:germeau_sateur/screens/mybar.dart';
+import 'package:germeau_sateur/screens/viewbarsPage.dart';
+import 'package:germeau_sateur/services/authentication_service.dart';
+import 'package:germeau_sateur/screens/createbarpage.dart';
 
 import 'package:provider/provider.dart';
 
@@ -21,13 +23,23 @@ class HomePage extends StatelessWidget {
             ),
             RaisedButton(
               onPressed: () {
-                // Navigator.push(
-                //context,
-                //  MaterialPageRoute(builder: (context) => CreateBarPage()),
-                // );
+                Navigator.push(
+                context,
+                 MaterialPageRoute(builder: (context) => CreateBarPage()),
+                );
               },
-              child: Text('Creae new store'),
-            )
+              child: Text('Create new bar'),
+              
+            ),
+            RaisedButton(
+              onPressed: () {
+                Navigator.push(
+                context,
+                 MaterialPageRoute(builder: (context) => ViewBarPage.initialize()),
+                );
+              },
+              child: Text('Bars'),
+            ),
           ],
         ),
       ),

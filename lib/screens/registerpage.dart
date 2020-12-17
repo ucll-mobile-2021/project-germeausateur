@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:germeau_sateur/authentication_service.dart';
+import 'package:germeau_sateur/services/authentication_service.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatelessWidget{
