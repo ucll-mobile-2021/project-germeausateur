@@ -9,6 +9,7 @@ class AuthenticationService {
 
   Future<String> signOut() async{
     await _firebaseAuth.signOut();
+    return 'signed out';
   }
 
   Future<String> signIn({String email, String password}) async{
