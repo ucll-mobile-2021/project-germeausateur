@@ -51,15 +51,7 @@ class SignInPage extends StatelessWidget {
             },
             child: Text('Register'),
           ),
-          RaisedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MenuPage()),
-              );
-            },
-            child: Text('Test'),
-          ),
+
           RaisedButton(
             onPressed: () {
               Navigator.push(

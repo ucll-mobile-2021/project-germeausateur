@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:germeau_sateur/models/bar.dart';
+import 'package:germeau_sateur/screens/menupage.dart';
 import 'package:germeau_sateur/services/barservice.dart';
 
 class ViewBarPage extends StatelessWidget {
@@ -16,7 +17,7 @@ class ViewBarPage extends StatelessWidget {
     loadBars();
   }
 
-  Widget makeWidget(Bar bar) {
+  Widget makeWidget(Bar bar, BuildContext context) {
     return ListTile(
       title: Text(bar.getName()),
       subtitle: Text(bar.getDescription()),
@@ -24,7 +25,10 @@ class ViewBarPage extends StatelessWidget {
         icon: Icon(Icons.keyboard_arrow_right),
         tooltip: 'visit bar',
         onPressed: () {
-          //TODO navigate to bar
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MenuPage(bar.getId())),
+                );
         },
       ),
     );
@@ -40,7 +44,7 @@ class ViewBarPage extends StatelessWidget {
             child: ListView.builder(
           itemCount: bars.length,
           itemBuilder: (context, index) {
-            return makeWidget(bars[index]);
+            return makeWidget(bars[index], context);
           },
         )));
   }
