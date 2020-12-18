@@ -1,29 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:germeau_sateur/models/bar.dart';
+import 'package:germeau_sateur/models/item.dart';
 
-class BarService {
+class ItemService {
   final CollectionReference colRef =
-      FirebaseFirestore.instance.collection('bars');
+      FirebaseFirestore.instance.collection('items');
 
-  Future<void> createBar(Bar bar) async {
+  Future<void> createItem(Item item) async {
     try {
-      await colRef.add(bar.toMap());
+      await colRef.add(item.toMap());
     } catch (e) {
       return e.toString();
     }
   }
 
-  Future<List<Bar>> getBars() async {
+  Future<List<Item>> getItems() async {
     try {
-      List<Bar> bars = [];
+      List<Item> items = [];
       colRef.get().then((value) {
-        for (DocumentSnapshot bar in value.docs) {
-          bars.add(Bar.fromMap(bar.data(), bar.id));
+        for (DocumentSnapshot item in value.docs) {
+          items.add(Item.fromMap(item.data(), item.id));
         }
       });
       print(
           "DIKEFUCKERHIERBENIKDIKKEONZONZELAARXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-      return bars;
+      print(items.length);
+      return items;
     } catch (e) {
       return e.message;
     }

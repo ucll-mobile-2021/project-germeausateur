@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:germeau_sateur/services/authentication_service.dart';
 import 'package:germeau_sateur/screens/registerpage.dart';
 import 'package:germeau_sateur/screens/menupage.dart';
+import 'package:germeau_sateur/screens/createitempage.dart';
+
 import 'package:provider/provider.dart';
 
 class SignInPage extends StatelessWidget {
@@ -23,6 +25,7 @@ class SignInPage extends StatelessWidget {
           TextField(
             controller: passwordController,
             decoration: InputDecoration(
+              border: InputBorder.none,
               labelText: 'Password',
             ),
             obscureText: true,
@@ -52,6 +55,15 @@ class SignInPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => MenuPage()),
+              );
+            },
+            child: Text('Test'),
+          ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CreateItemPage()),
               );
             },
             child: Text('Test'),

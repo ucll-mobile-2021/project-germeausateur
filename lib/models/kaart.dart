@@ -1,18 +1,18 @@
-import 'Item.dart';
+import 'item.dart';
 
-class Kaart{
+class Kaart {
+  int _id;
+  List<Item> _items = new List();
 
-    int _id;
-    List<Item> _items = new List();
+  List<Item> getKaart() {
+    return _items;
+  }
 
-    List<Item> getKaart(){
-      return _items;
-    }
+  void addItem(Item item) {
+    _items.add(item);
+  }
 
-    void addItem(Item item){
-      _items.add(item);
-    }
-    Item getItem(int i){
-      return _items[i];
-    }
+  Item getItem(int i) {
+    return _items[i];
+  }
 }

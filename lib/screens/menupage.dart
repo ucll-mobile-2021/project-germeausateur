@@ -1,55 +1,85 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_counter/flutter_counter.dart';
+import 'package:germeau_sateur/services/itemservice.dart';
+import 'package:germeau_sateur/models/item.dart';
+import 'package:footer/footer.dart';
+import 'package:footer/footer_view.dart';
 
 class MenuPage extends StatefulWidget {
   @override
-  _MenuPageState createState() => _MenuPageState();
+  _MenuPageState createState() => _MenuPageState.initialize();
 }
 
 class _MenuPageState extends State<MenuPage> {
-  int _n = 0;
-  void add() {
-    setState(() {
-      _n++;
+  _MenuPageState() : super();
+
+  _MenuPageState.initialize() {
+    loadItems();
+    loadCounter();
+  }
+  final ItemService service = new ItemService();
+
+  static List<Item> items = [];
+
+  Map<String, int> _counter = Map();
+
+  void loadItems() async {
+    items = await service.getItems();
+  }
+
+  void loadCounter() {
+    items.forEach((item) {
+      _counter[item.getId()] = 0;
     });
   }
 
-  void minus() {
-    setState(() {
-      if (_n != 0) _n--;
-    });
+  Widget makeWidget(Item item) {
+    return ListTile(
+        leading: Text("Image"),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[Text(item.getName()), Text(item.getPrice() + "€")],
+        ),
+        subtitle: Text(item.getSize() + "ml"),
+        trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.remove_circle_outline),
+            onPressed: () {
+              setState(() {
+                if (_counter[item.getId()] != 0) {
+                  _counter.update(item.getId(), (i) => i - 1);
+                }
+              });
+            },
+          ),
+          Text(_counter[item.getId()].toString()),
+          IconButton(
+            icon: Icon(Icons.add_circle_outline),
+            onPressed: () {
+              setState(() {
+                if (_counter[item.getId()] != 25) {
+                  _counter.update(item.getId(), (i) => i + 1);
+                }
+              });
+            },
+          ),
+        ]));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ListTile(
-              leading: Text("Image"),
-              title: Text("Cola"),
-              isThreeLine: true,
-              subtitle: Text("33cl"),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.remove_circle_outline),
-                    onPressed: (minus),
-                  ),
-                  Text('$_n'),
-                  IconButton(
-                    icon: Icon(Icons.add_circle_outline),
-                    onPressed: (add),
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+      appBar: AppBar(
+        title: Text("Menu"),
       ),
+      body: Container(
+          child: ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return makeWidget(items[index]);
+        },
+      )),
     );
   }
 }
