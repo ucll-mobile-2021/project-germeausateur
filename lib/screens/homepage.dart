@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:germeau_sateur/screens/viewbarsPage.dart';
 import 'package:germeau_sateur/services/authentication_service.dart';
 import 'package:germeau_sateur/screens/createbarpage.dart';
-import 'package:germeau_sateur/screens/scanpage.dart';
 
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
+
+  _scan(BuildContext context) async{
+    await FlutterBarcodeScanner.scanBarcode("#000000", "Cancel", false, ScanMode.QR)
+      .then((value) => {
+        if(value == "MAXIME"){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ViewBarPage.initialize()))
+        }else{
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()))
+        }
+        
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,11 +55,7 @@ class HomePage extends StatelessWidget {
             ),
             RaisedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ScanPage()),
-                );
+                _scan(context);
               },
               child: Text('Scan QR'),
             ),

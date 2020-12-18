@@ -14,13 +14,14 @@ class SignInPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextField(
+          TextFormField(
+            validator: EmailValidator.validate,
             controller: emailController,
             decoration: InputDecoration(
               labelText: 'Email',
             ),
           ),
-          TextField(
+          TextFormField(
             controller: passwordController,
             decoration: InputDecoration(
               labelText: 'Password',

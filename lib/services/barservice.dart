@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:germeau_sateur/models/Item.dart';
 import 'package:germeau_sateur/models/bar.dart';
 
 class BarService {
@@ -27,6 +28,22 @@ class BarService {
     }catch (e){
       return e.message;
     }
+  }
+
+  Future<List<Item>> getMenuFromBar(String barid) async{
+      try{
+        List<Item> menu = [];
+
+        colRef.doc(barid).collection("menu").get().then((value) {
+
+          for(DocumentSnapshot item in value.docs){
+            menu.add(Item.fromMap(item.data(), item.id));
+          }
+        });
+        return menu;
+      }catch (e){
+        return e.message;
+      }
   }
 
 }
