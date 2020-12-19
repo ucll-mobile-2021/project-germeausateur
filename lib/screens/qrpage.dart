@@ -18,6 +18,7 @@ class QRPage extends StatelessWidget{
       ),
       body: Center(
         child: QrImage(
+          backgroundColor: Colors.white,
           data: _barid,
           version: QrVersions.auto,
           size: 300,

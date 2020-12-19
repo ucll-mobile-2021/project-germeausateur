@@ -37,7 +37,7 @@ class CreateBarPage extends StatelessWidget {
               nameController.text.trim(),
               descriptionController.text.trim(),
             );
-            context.read<BarService>().createBar(bar);
+            context.read<BarService>().createBar(bar, auth.currentUser.uid);
           },
           child: Text('Create bar'),
         )

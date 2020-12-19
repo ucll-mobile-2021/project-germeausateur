@@ -6,12 +6,26 @@ class BarService {
   final CollectionReference colRef =
       FirebaseFirestore.instance.collection('bars');
 
-  Future<void> createBar(Bar bar) async {
-    try {
-      await colRef.add(bar.toMap());
+  Future<void> createBar(Bar bar, String uid) async {
+    try { 
+      if(!await userHasBar(uid)){
+        await colRef.add(bar.toMap());
+      }
     } catch (e) {
       return e.toString();
     }
+  }
+
+  Future<bool> userHasBar(String uid) async{
+    bool out = false;
+    await colRef.get().then((value) => {
+        for(DocumentSnapshot bar in value.docs){
+          if (bar['userid'] == uid){
+            out = true
+          }
+        }
+      });
+      return out;
   }
 
   Future<List<Bar>> getBars() async {
