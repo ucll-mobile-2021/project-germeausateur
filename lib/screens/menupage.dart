@@ -22,6 +22,10 @@ class _MenuPageState extends State<MenuPage> {
   _MenuPageState.initialize(String barid) {
     _barId = barid;
     loadCounter();
+    print(
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+
+    print(items);
   }
 
   final BarService service = new BarService();
@@ -83,11 +87,15 @@ class _MenuPageState extends State<MenuPage> {
               });
             },
           ),
-          Text(_counter[item.getId()].toString()),
+          if (!_counter.containsKey(item.getId()))
+            Text("0")
+          else
+            Text(_counter[item.getId()].toString()),
           IconButton(
             icon: Icon(Icons.add_circle_outline),
             onPressed: () {
               setState(() {
+                _counter.putIfAbsent(item.getId(), () => 0);
                 if (_counter[item.getId()] != 25) {
                   _counter.update(item.getId(), (i) => i + 1);
                   addtotal(item.getPrice());
@@ -98,6 +106,8 @@ class _MenuPageState extends State<MenuPage> {
         ]));
   }
 
+  void quickfix() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,25 +116,24 @@ class _MenuPageState extends State<MenuPage> {
       ),
       body: Container(
           child: FutureBuilder(
-            future: loadItems(_barId),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if(snapshot.data == null){
-                return Container(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              }else {
-                return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return makeWidget(snapshot.data[index]);
+        future: loadItems(_barId),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.data == null) {
+            return Container(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                return makeWidget(snapshot.data[index]);
+              },
+            );
+          }
         },
-      );
-              }
-            },
-          )
-          ),
+      )),
       bottomNavigationBar: BottomAppBar(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
