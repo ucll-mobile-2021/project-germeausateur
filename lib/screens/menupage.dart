@@ -1,30 +1,38 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:germeau_sateur/services/barservice.dart';
 import 'package:germeau_sateur/services/itemservice.dart';
 import 'package:germeau_sateur/models/item.dart';
 import 'package:germeau_sateur/screens/confirmorderpage.dart';
 
 class MenuPage extends StatefulWidget {
+  String _barid;
+
+  MenuPage(String barid) {
+    _barid = barid;
+  }
+
   @override
-  _MenuPageState createState() => _MenuPageState.initialize();
+  _MenuPageState createState() => _MenuPageState.initialize(_barid);
 }
 
 class _MenuPageState extends State<MenuPage> {
   _MenuPageState() : super();
 
-  _MenuPageState.initialize() {
-    loadItems();
+  _MenuPageState.initialize(String barid) {
+    loadItems(barid);
     loadCounter();
   }
-  final ItemService service = new ItemService();
+
+  final BarService service = new BarService();
 
   static List<Item> items = [];
 
   Map<String, int> _counter = Map();
 
-  void loadItems() async {
-    items = await service.getItems();
+  void loadItems(String barid) async {
+    items = await service.getMenuFromBar(barid);
   }
 
   void loadCounter() {

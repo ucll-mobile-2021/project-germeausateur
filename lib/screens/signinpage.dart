@@ -16,13 +16,14 @@ class SignInPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextField(
+          TextFormField(
+            validator: EmailValidator.validate,
             controller: emailController,
             decoration: InputDecoration(
               labelText: 'Email',
             ),
           ),
-          TextField(
+          TextFormField(
             controller: passwordController,
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -50,15 +51,7 @@ class SignInPage extends StatelessWidget {
             },
             child: Text('Register'),
           ),
-          RaisedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MenuPage()),
-              );
-            },
-            child: Text('Test'),
-          ),
+
           RaisedButton(
             onPressed: () {
               Navigator.push(

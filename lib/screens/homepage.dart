@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:germeau_sateur/screens/generateqrpage.dart';
 import 'package:germeau_sateur/screens/viewbarsPage.dart';
 import 'package:germeau_sateur/services/authentication_service.dart';
 import 'package:germeau_sateur/screens/createbarpage.dart';
-import 'package:germeau_sateur/screens/scanpage.dart';
 
 import 'package:provider/provider.dart';
 
+import 'menupage.dart';
+
 class HomePage extends StatelessWidget {
+
+  _scan(BuildContext context) async{
+    await FlutterBarcodeScanner.scanBarcode("#000000", "Cancel", false, ScanMode.QR)
+      .then((value) => {
+
+          Navigator.push(context, 
+              MaterialPageRoute(builder: (context) => MenuPage(value)))
+
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,20 +49,27 @@ class HomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ViewBarPage.initialize()),
+                      builder: (context) => ViewBarPage()),
                 );
               },
               child: Text('Bars'),
             ),
             RaisedButton(
               onPressed: () {
+                _scan(context);
+              },
+              child: Text('Scan QR'),
+            ),
+            
+            RaisedButton(
+              onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ScanPage()),
+                      builder: (context) => GenerateQRPage()),
                 );
               },
-              child: Text('Scan QR'),
+              child: Text('generate qr'),
             ),
           ],
         ),

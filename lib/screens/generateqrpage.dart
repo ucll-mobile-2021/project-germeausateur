@@ -1,21 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:germeau_sateur/models/bar.dart';
-import 'package:germeau_sateur/screens/menupage.dart';
+import 'package:germeau_sateur/screens/qrpage.dart';
 import 'package:germeau_sateur/services/barservice.dart';
+
+import 'menupage.dart';
 
 final BarService service = new BarService();
 
-class ViewBarPage extends StatefulWidget {
-  
+class GenerateQRPage extends StatefulWidget{
   @override
-  _ViewBarPageState createState() => _ViewBarPageState();
-}
+  _GenerateQRPageState createState() => _GenerateQRPageState();
 
-class _ViewBarPageState extends State<ViewBarPage> {
-
-  List<Bar> bars = [];
+  }
   
+class _GenerateQRPageState extends State<GenerateQRPage>{
 
   Future<List<Bar>> loadBars() async {
     return await service.getBars();
@@ -23,10 +22,9 @@ class _ViewBarPageState extends State<ViewBarPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
-          title: Text("Bars"),
+          title: Text("Generate QR"),
         ),
         body: Container(
             child: FutureBuilder(
@@ -51,7 +49,7 @@ class _ViewBarPageState extends State<ViewBarPage> {
                           tooltip: 'visit bar',
                           onPressed: () {
                             Navigator.push(context, 
-                              MaterialPageRoute(builder: (context) => MenuPage(snapshot.data[index].getId())));
+                              MaterialPageRoute(builder: (context) => QRPage(snapshot.data[index].getId())));
                           },
                         ),
                       );
