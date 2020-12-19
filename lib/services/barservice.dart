@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:germeau_sateur/models/item.dart';
 import 'package:germeau_sateur/models/bar.dart';
+import 'package:germeau_sateur/models/order.dart';
 
 class BarService {
   final CollectionReference colRef =
@@ -38,6 +39,21 @@ class BarService {
         }
       });
       return menu;
+    } catch (e) {
+      return e.message;
+    }
+  }
+
+  Future<List<Order>> getOrdersFromBar(String barid) async {
+    try {
+      List<Order> order = [];
+
+      await colRef.doc(barid).collection("order").get().then((value) {
+        for (DocumentSnapshot order in value.docs) {
+          //order.add(Item.fromMap(order.data(), order.id));
+        }
+      });
+      return order;
     } catch (e) {
       return e.message;
     }
