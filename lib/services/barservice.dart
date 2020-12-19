@@ -56,4 +56,16 @@ class BarService {
       return e.message;
     }
   }
+
+  Future<bool> barExists(String barid) async {
+    bool out = false;
+    await colRef.get().then((value) => {
+        for(DocumentSnapshot bar in value.docs){
+          if (bar.id == barid){
+            out = true
+          }
+        }
+      });
+      return out;
+  }
 }
