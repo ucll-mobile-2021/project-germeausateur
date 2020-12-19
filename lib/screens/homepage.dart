@@ -6,17 +6,17 @@ import 'package:germeau_sateur/screens/createbarpage.dart';
 
 import 'package:provider/provider.dart';
 
+import 'menupage.dart';
+
 class HomePage extends StatelessWidget {
 
   _scan(BuildContext context) async{
     await FlutterBarcodeScanner.scanBarcode("#000000", "Cancel", false, ScanMode.QR)
       .then((value) => {
-        if(value == "MAXIME"){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ViewBarPage.initialize()))
-        }else{
-          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()))
-        }
-        
+
+          Navigator.push(context, 
+              MaterialPageRoute(builder: (context) => MenuPage(value)))
+
       });
   }
 
@@ -48,7 +48,7 @@ class HomePage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ViewBarPage.initialize()),
+                      builder: (context) => ViewBarPage()),
                 );
               },
               child: Text('Bars'),

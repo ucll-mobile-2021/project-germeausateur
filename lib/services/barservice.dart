@@ -17,14 +17,12 @@ class BarService {
   Future<List<Bar>> getBars() async {
     try {
       List<Bar> bars = [];
-      colRef.get().then((value) {
+      await colRef.get().then((value) {
         for (DocumentSnapshot bar in value.docs) {
           bars.add(Bar.fromMap(bar.data(), bar.id));
         }
       });
-      print(
-          "DIKEFUCKERHIERBENIKDIKKEONZONZELAARXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-      return bars;
+    return bars;
     } catch (e) {
       return e.message;
     }
@@ -34,7 +32,7 @@ class BarService {
       try{
         List<Item> menu = [];
 
-        colRef.doc(barid).collection("menu").get().then((value) {
+        await colRef.doc(barid).collection("menu").get().then((value) {
 
           for(DocumentSnapshot item in value.docs){
             menu.add(Item.fromMap(item.data(), item.id));
