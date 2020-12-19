@@ -1,8 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:germeau_sateur/services/barservice.dart';
-import 'package:germeau_sateur/services/itemservice.dart';
 import 'package:germeau_sateur/models/item.dart';
 import 'package:germeau_sateur/screens/confirmorderpage.dart';
 
@@ -20,8 +17,10 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   _MenuPageState() : super();
 
+  String _barId;
+
   _MenuPageState.initialize(String barid) {
-    loadItems(barid);
+    _barId = barid;
     loadCounter();
   }
 
@@ -31,8 +30,10 @@ class _MenuPageState extends State<MenuPage> {
 
   Map<String, int> _counter = Map();
 
-  void loadItems(String barid) async {
-    items = await service.getMenuFromBar(barid);
+  Future loadItems(String barid) async {
+    var out = await service.getMenuFromBar(barid);
+    items = out;
+    return out;
   }
 
   void loadCounter() {
@@ -104,12 +105,26 @@ class _MenuPageState extends State<MenuPage> {
         title: Text("Menu"),
       ),
       body: Container(
-          child: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return makeWidget(items[index]);
+          child: FutureBuilder(
+            future: loadItems(_barId),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if(snapshot.data == null){
+                return Container(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }else {
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return makeWidget(snapshot.data[index]);
         },
-      )),
+      );
+              }
+            },
+          )
+          ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -14,9 +14,6 @@ class ViewBarPage extends StatefulWidget {
 
 class _ViewBarPageState extends State<ViewBarPage> {
 
-  List<Bar> bars = [];
-  
-
   Future<List<Bar>> loadBars() async {
     return await service.getBars();
   }
@@ -57,8 +54,7 @@ class _ViewBarPageState extends State<ViewBarPage> {
                       );
                     },
                   );
-                }
-                  
+                }      
               },
             )
         )

@@ -14,10 +14,8 @@ class HomePage extends StatelessWidget {
   _scan(BuildContext context) async{
     await FlutterBarcodeScanner.scanBarcode("#000000", "Cancel", false, ScanMode.QR)
       .then((value) => {
-
           Navigator.push(context, 
               MaterialPageRoute(builder: (context) => MenuPage(value)))
-
       });
   }
 
