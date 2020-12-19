@@ -13,21 +13,30 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Container(
+        margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+        child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextFormField(
+          Container(
+            margin: EdgeInsets.only(bottom:10.0),
+            child: TextFormField(
             validator: EmailValidator.validate,
             controller: emailController,
             decoration: InputDecoration(
               labelText: 'Email',
+              fillColor: Colors.grey[800],
+              filled: true,
             ),
+          ),
           ),
           TextFormField(
             controller: passwordController,
             decoration: InputDecoration(
               border: InputBorder.none,
               labelText: 'Password',
+              fillColor: Colors.grey[800],
+              filled: true,
             ),
             obscureText: true,
             autocorrect: false,
@@ -63,6 +72,7 @@ class SignInPage extends StatelessWidget {
           )
         ],
       ),
+      )
     );
   }
 }

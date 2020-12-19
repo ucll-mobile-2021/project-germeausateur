@@ -36,8 +36,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'BIER',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.teal,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          brightness: Brightness.dark,
         ),
         home: AutenticationWrapper(),
       ),

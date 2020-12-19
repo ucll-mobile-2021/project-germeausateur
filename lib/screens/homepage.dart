@@ -4,6 +4,7 @@ import 'package:germeau_sateur/screens/generateqrpage.dart';
 import 'package:germeau_sateur/screens/viewbarsPage.dart';
 import 'package:germeau_sateur/services/authentication_service.dart';
 import 'package:germeau_sateur/screens/createbarpage.dart';
+import 'package:germeau_sateur/services/barservice.dart';
 
 import 'package:provider/provider.dart';
 
@@ -11,11 +12,15 @@ import 'menupage.dart';
 
 class HomePage extends StatelessWidget {
 
+  BarService service = new BarService();
+
   _scan(BuildContext context) async{
     await FlutterBarcodeScanner.scanBarcode("#000000", "Cancel", false, ScanMode.QR)
-      .then((value) => {
-          Navigator.push(context, 
+      .then((value)async => {
+          if(value != null && await service.barExists(value)){
+            Navigator.push(context, 
               MaterialPageRoute(builder: (context) => MenuPage(value)))
+          }
       });
   }
 
