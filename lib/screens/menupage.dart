@@ -3,8 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:germeau_sateur/services/itemservice.dart';
 import 'package:germeau_sateur/models/item.dart';
-import 'package:footer/footer.dart';
-import 'package:footer/footer_view.dart';
+import 'package:germeau_sateur/screens/confirmorderpage.dart';
 
 class MenuPage extends StatefulWidget {
   @override
@@ -34,6 +33,27 @@ class _MenuPageState extends State<MenuPage> {
     });
   }
 
+  double price = 0;
+
+  void addtotal(item) {
+    price += double.parse(item);
+  }
+
+  void minustotal(item) {
+    price -= double.parse(item);
+  }
+
+  List<Item> orderList = [];
+
+  void createOrderList() {
+    orderList = [];
+    items.forEach((item) {
+      if (_counter.containsKey(item.getId()) && _counter[item.getId()] != 0) {
+        orderList.add(item);
+      }
+    });
+  }
+
   Widget makeWidget(Item item) {
     return ListTile(
         leading: Text("Image"),
@@ -49,6 +69,7 @@ class _MenuPageState extends State<MenuPage> {
               setState(() {
                 if (_counter[item.getId()] != 0) {
                   _counter.update(item.getId(), (i) => i - 1);
+                  minustotal(item.getPrice());
                 }
               });
             },
@@ -60,6 +81,7 @@ class _MenuPageState extends State<MenuPage> {
               setState(() {
                 if (_counter[item.getId()] != 25) {
                   _counter.update(item.getId(), (i) => i + 1);
+                  addtotal(item.getPrice());
                 }
               });
             },
@@ -80,6 +102,39 @@ class _MenuPageState extends State<MenuPage> {
           return makeWidget(items[index]);
         },
       )),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              "Totaal",
+              style: TextStyle(fontSize: 24),
+            ),
+            Text(
+              "$price €",
+              style: TextStyle(fontSize: 24),
+            ),
+            RaisedButton(
+              onPressed: () {
+                createOrderList();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ConfirmOrderPage(
+                          counter: _counter,
+                          price: price,
+                          items: items,
+                          orderList: orderList)),
+                );
+              },
+              child: Text(
+                "Bestel",
+                style: new TextStyle(fontSize: 24),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
