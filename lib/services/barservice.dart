@@ -68,18 +68,60 @@ class BarService {
     return out;
   }
 
-  Future<List<Order>> getOrdersFromBar(String barid) async {
-    try {
-      List<Order> order = [];
+  Future<void> addOrderToBar(String barid, Order order) async{
+    try{
+      await colRef.doc(barid).collection("orders").add(order.toMap()).then((value) => {
 
-      await colRef.doc(barid).collection("order").get().then((value) {
-        for (DocumentSnapshot order in value.docs) {
-          //order.add(Item.fromMap(order.data(), order.id));
+        order.getItems().forEach((element) {
+          colRef.doc(barid)
+            .collection("orders")
+            .doc(value.id)
+            .collection("items")
+            .add({'itemid': element.getId()});
+        })   
         }
-      });
-      return order;
-    } catch (e) {
+      );
+    }catch (e){
       return e.message;
     }
   }
+
+
+  Future<List<Order>> getOrdersFromBar(String barid) async {
+
+      List<Order> orders = [];
+      
+
+      //get alle orders
+      await colRef.doc(barid).collection("orders").get().then((value) async {
+        for (DocumentSnapshot order in value.docs) {
+
+          List<Item> orderItems = [];
+          //get alle items van die order
+          await colRef.doc(barid).collection("orders")
+            .doc(order.id).collection('items').get().then((value)async {
+
+              for(DocumentSnapshot snapshot in value.docs){
+
+                String iid = snapshot.data()['itemid'];
+
+                //get alle items van een menu
+                 await getMenuFromBar(barid).then((value) {
+                   for(Item item in value){
+                     if(iid == item.getId()){
+                       orderItems.add(item);
+                     }
+                   }
+                 });
+              }
+          });
+
+          orders.add(new Order(orderItems,order.data()['completed'],order.data()['table'])); 
+        }
+      });
+      return orders;
+
+  }
+
+
 }

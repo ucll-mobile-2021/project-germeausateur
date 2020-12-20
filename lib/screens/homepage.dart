@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:germeau_sateur/models/Item.dart';
+import 'package:germeau_sateur/models/order.dart';
 import 'package:germeau_sateur/screens/generateqrpage.dart';
 import 'package:germeau_sateur/screens/viewbarsPage.dart';
 import 'package:germeau_sateur/services/authentication_service.dart';
