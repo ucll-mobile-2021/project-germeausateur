@@ -86,6 +86,10 @@ class BarService {
     }
   }
 
+  Future<void> setOrderToComplete(String barid, String orderid) async{
+    await colRef.doc(barid).collection("orders").doc(orderid).update({'completed': true});
+  }
+
 
   Future<List<Order>> getOrdersFromBar(String barid) async {
 
@@ -97,7 +101,7 @@ class BarService {
         for (DocumentSnapshot order in value.docs) {
 
           List<Item> orderItems = [];
-          //get alle items van die order
+          //get alle itemsid's van die order
           await colRef.doc(barid).collection("orders")
             .doc(order.id).collection('items').get().then((value)async {
 
@@ -107,6 +111,7 @@ class BarService {
 
                 //get alle items van een menu
                  await getMenuFromBar(barid).then((value) {
+                   //itemid van order linken met item van menu
                    for(Item item in value){
                      if(iid == item.getId()){
                        orderItems.add(item);
