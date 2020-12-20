@@ -1,3 +1,5 @@
+import 'package:germeau_sateur/models/Item.dart';
+
 class Order {
   List _items;
   bool _completed;
@@ -15,9 +17,9 @@ class Order {
     };
   }
 
-  Order.fromData(Map<String, dynamic> data)
-      : _items = data['items'],
-        _completed = data['completed'],
+  Order.fromData(Map<String, dynamic> data, String id)
+      : _completed = data['completed'],
+        _orderid = id,
         _table = data['table'];
 
   static Order fromMap(Map<String, dynamic> map, String id) {
@@ -40,5 +42,9 @@ class Order {
 
   String getTable() {
     return _table;
+  }
+
+  void setItems(List items){
+    _items = items;
   }
 }

@@ -118,6 +118,7 @@ class BarService {
         .update({'completed': true});
   }
 
+
   Future<List<Order>> getOrdersFromBar(String barid) async {
     List<Order> orders = [];
 
@@ -153,5 +154,14 @@ class BarService {
       }
     });
     return orders;
+  }
+  Future<Bar> getBarObjFromUser(String uid) async {
+    Bar bar;
+    await colRef.where("userid", isEqualTo: uid).get().then((value) {
+      for (DocumentSnapshot snapshot in value.docs) {
+        bar = Bar.fromData(snapshot.data());
+      }
+    });
+    return bar;
   }
 }
