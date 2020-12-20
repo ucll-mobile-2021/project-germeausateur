@@ -22,10 +22,6 @@ class _MenuPageState extends State<MenuPage> {
   _MenuPageState.initialize(String barid) {
     _barId = barid;
     loadCounter();
-    print(
-        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-
-    print(items);
   }
 
   final BarService service = new BarService();
@@ -74,7 +70,10 @@ class _MenuPageState extends State<MenuPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[Text(item.getName()), Text(item.getPrice() + "€")],
         ),
-        subtitle: Text(item.getSize() + "ml"),
+        subtitle: Text(
+          item.getSize() + "ml",
+          style: TextStyle(fontSize: 10),
+        ),
         trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
           IconButton(
             icon: Icon(Icons.remove_circle_outline),
@@ -136,10 +135,10 @@ class _MenuPageState extends State<MenuPage> {
       )),
       bottomNavigationBar: BottomAppBar(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Text(
-              "Totaal",
+              "Total",
               style: TextStyle(fontSize: 24),
             ),
             Text(
@@ -160,7 +159,7 @@ class _MenuPageState extends State<MenuPage> {
                 );
               },
               child: Text(
-                "Bestel",
+                "Order",
                 style: new TextStyle(fontSize: 24),
               ),
             ),

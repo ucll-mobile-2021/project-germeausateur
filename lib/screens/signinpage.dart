@@ -13,22 +13,22 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        margin: const EdgeInsets.only(left: 20.0, right: 20.0),
-        child: Column(
+        body: Container(
+      margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.only(bottom:10.0),
+            margin: EdgeInsets.only(bottom: 10.0),
             child: TextFormField(
-            validator: EmailValidator.validate,
-            controller: emailController,
-            decoration: InputDecoration(
-              labelText: 'Email',
-              fillColor: Colors.grey[800],
-              filled: true,
+              validator: EmailValidator.validate,
+              controller: emailController,
+              decoration: InputDecoration(
+                labelText: 'Email',
+                fillColor: Colors.grey[800],
+                filled: true,
+              ),
             ),
-          ),
           ),
           TextFormField(
             controller: passwordController,
@@ -60,19 +60,8 @@ class SignInPage extends StatelessWidget {
             },
             child: Text('Register'),
           ),
-
-          RaisedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CreateItemPage()),
-              );
-            },
-            child: Text('Test'),
-          )
         ],
       ),
-      )
-    );
+    ));
   }
 }

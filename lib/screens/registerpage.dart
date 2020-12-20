@@ -10,44 +10,62 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextField(
-            controller: emailController,
-            decoration: InputDecoration(
-              labelText: 'Email',
+      body: Container(
+        margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: 10.0),
+              child: TextFormField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  fillColor: Colors.grey[800],
+                  filled: true,
+                ),
+                obscureText: true,
+                autocorrect: false,
+                enableSuggestions: false,
+              ),
             ),
-          ),
-          TextField(
-            controller: passwordController,
-            decoration: InputDecoration(
-              labelText: 'Password',
+            Container(
+              margin: EdgeInsets.only(bottom: 10.0),
+              child: TextField(
+                controller: passwordController,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  fillColor: Colors.grey[800],
+                  filled: true,
+                ),
+                obscureText: true,
+                autocorrect: false,
+                enableSuggestions: false,
+              ),
             ),
-            obscureText: true,
-            autocorrect: false,
-            enableSuggestions: false,
-          ),
-          TextField(
-            controller: password2Controller,
-            decoration: InputDecoration(
-              labelText: 'Confirm password',
+            TextField(
+              controller: password2Controller,
+              decoration: InputDecoration(
+                labelText: 'Confirm password',
+                fillColor: Colors.grey[800],
+                filled: true,
+              ),
+              obscureText: true,
+              autocorrect: false,
+              enableSuggestions: false,
             ),
-            obscureText: true,
-            autocorrect: false,
-            enableSuggestions: false,
-          ),
-          RaisedButton(
-            onPressed: () {
-              context.read<AuthenticationService>().signUp(
-                    email: emailController.text.trim(),
-                    password: passwordController.text.trim(),
-                    confirmPassword: password2Controller.text.trim(),
-                  );
-            },
-            child: Text('Register'),
-          ),
-        ],
+            RaisedButton(
+              onPressed: () {
+                context.read<AuthenticationService>().signUp(
+                      email: emailController.text.trim(),
+                      password: passwordController.text.trim(),
+                      confirmPassword: password2Controller.text.trim(),
+                    );
+              },
+              child: Text('Register'),
+            ),
+          ],
+        ),
       ),
     );
   }

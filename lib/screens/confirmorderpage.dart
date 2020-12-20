@@ -4,6 +4,8 @@ import 'package:germeau_sateur/models/item.dart';
 import 'package:germeau_sateur/services/itemservice.dart';
 
 class ConfirmOrderPage extends StatelessWidget {
+  final TextEditingController tableController = TextEditingController();
+
   List<Item> items = [];
 
   Map<String, int> counter = Map();
@@ -20,13 +22,36 @@ class ConfirmOrderPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[Text(item.getName()), Text(item.getPrice() + "€")],
       ),
-      subtitle: Text(item.getSize() + "ml"),
+      subtitle: Text(
+        item.getSize() + "ml",
+        style: TextStyle(fontSize: 10),
+      ),
       trailing: Text(counter[item.getId()].toString()),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    _showMaterialDialog() {
+      showDialog(
+          context: context,
+          builder: (_) => new AlertDialog(
+                title: new Text("Fill in table number"),
+                content: TextField(
+                  controller: tableController,
+                  decoration: InputDecoration(
+                    labelText: 'table number',
+                  ),
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('Confirm'),
+                    onPressed: () {},
+                  )
+                ],
+              ));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Overview"),
@@ -40,10 +65,10 @@ class ConfirmOrderPage extends StatelessWidget {
       )),
       bottomNavigationBar: BottomAppBar(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Text(
-              "Totaal",
+              "Total",
               style: TextStyle(fontSize: 24),
             ),
             Text(
@@ -51,7 +76,9 @@ class ConfirmOrderPage extends StatelessWidget {
               style: TextStyle(fontSize: 24),
             ),
             RaisedButton(
-              onPressed: () {},
+              onPressed: () {
+                _showMaterialDialog();
+              },
               child: Text(
                 "Confirm",
                 style: new TextStyle(fontSize: 24),

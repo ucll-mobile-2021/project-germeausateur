@@ -17,18 +17,28 @@ class CreateBarPage extends StatelessWidget {
         body: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        TextField(
-          controller: nameController,
-          decoration: InputDecoration(
-            labelText: 'Name',
+        Container(
+          margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10),
+          child: TextFormField(
+            controller: nameController,
+            decoration: InputDecoration(
+              labelText: 'Name',
+              fillColor: Colors.grey[800],
+              filled: true,
+            ),
           ),
         ),
-        TextField(
-          keyboardType: TextInputType.multiline,
-          maxLines: null,
-          controller: descriptionController,
-          decoration: InputDecoration(
-            labelText: 'Description',
+        Container(
+          margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10),
+          child: TextFormField(
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+            controller: descriptionController,
+            decoration: InputDecoration(
+              labelText: 'Description',
+              fillColor: Colors.grey[800],
+              filled: true,
+            ),
           ),
         ),
         RaisedButton(
@@ -39,6 +49,7 @@ class CreateBarPage extends StatelessWidget {
               descriptionController.text.trim(),
             );
             context.read<BarService>().createBar(bar, auth.currentUser.uid);
+            Navigator.of(context).pop();
           },
           child: Text('Create bar'),
         )
