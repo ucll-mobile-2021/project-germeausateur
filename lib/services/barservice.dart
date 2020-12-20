@@ -160,7 +160,7 @@ class BarService {
     Bar bar;
     await colRef.where("userid", isEqualTo: uid).get().then((value) {
       for (DocumentSnapshot snapshot in value.docs) {
-        bar = Bar.fromData(snapshot.data());
+        bar = Bar.fromData(snapshot.data(), snapshot.id);
       }
     });
     return bar;
