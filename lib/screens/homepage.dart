@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:germeau_sateur/screens/generateqrpage.dart';
 import 'package:germeau_sateur/screens/viewbarsPage.dart';
+import 'package:germeau_sateur/screens/createitempage.dart';
 import 'package:germeau_sateur/services/authentication_service.dart';
 import 'package:germeau_sateur/screens/createbarpage.dart';
 import 'package:germeau_sateur/services/barservice.dart';
@@ -11,17 +12,18 @@ import 'package:provider/provider.dart';
 import 'menupage.dart';
 
 class HomePage extends StatelessWidget {
-
   BarService service = new BarService();
 
-  _scan(BuildContext context) async{
-    await FlutterBarcodeScanner.scanBarcode("#000000", "Cancel", false, ScanMode.QR)
-      .then((value)async => {
-          if(value != null && await service.barExists(value)){
-            Navigator.push(context, 
-              MaterialPageRoute(builder: (context) => MenuPage(value)))
-          }
-      });
+  _scan(BuildContext context) async {
+    await FlutterBarcodeScanner.scanBarcode(
+            "#000000", "Cancel", false, ScanMode.QR)
+        .then((value) async => {
+              if (value != null && await service.barExists(value))
+                {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MenuPage(value)))
+                }
+            });
   }
 
   @override
@@ -51,8 +53,7 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => ViewBarPage()),
+                  MaterialPageRoute(builder: (context) => ViewBarPage()),
                 );
               },
               child: Text('Bars'),
@@ -63,16 +64,23 @@ class HomePage extends StatelessWidget {
               },
               child: Text('Scan QR'),
             ),
-            
             RaisedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => GenerateQRPage()),
+                  MaterialPageRoute(builder: (context) => GenerateQRPage()),
                 );
               },
-              child: Text('generate qr'),
+              child: Text('Generate QR'),
+            ),
+            RaisedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CreateItemPage()),
+                );
+              },
+              child: Text('Create new Item'),
             ),
           ],
         ),

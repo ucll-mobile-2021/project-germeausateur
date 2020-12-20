@@ -17,6 +17,27 @@ class BarService {
     }
   }
 
+  Future<String> getBarFromUser(String uid) async {
+    String barid = "";
+    await colRef.where("userid", isEqualTo: uid).get().then((value) {
+      for (DocumentSnapshot snapshot in value.docs) {
+        barid = snapshot.id;
+      }
+    });
+    return barid;
+  }
+
+  Future<void> createItem(Item item, String uid) async {
+    try {
+      await colRef
+          .doc(await getBarFromUser(uid))
+          .collection("menu")
+          .add(item.toMap());
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
   Future<bool> userHasBar(String uid) async {
     bool out = false;
     await colRef.get().then((value) => {
@@ -66,20 +87,5 @@ class BarService {
             }
         });
     return out;
-  }
-
-  Future<List<Order>> getOrdersFromBar(String barid) async {
-    try {
-      List<Order> order = [];
-
-      await colRef.doc(barid).collection("order").get().then((value) {
-        for (DocumentSnapshot order in value.docs) {
-          //order.add(Item.fromMap(order.data(), order.id));
-        }
-      });
-      return order;
-    } catch (e) {
-      return e.message;
-    }
   }
 }
