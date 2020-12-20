@@ -7,6 +7,8 @@ import 'package:germeau_sateur/screens/viewbarsPage.dart';
 import 'package:germeau_sateur/screens/createitempage.dart';
 import 'package:germeau_sateur/services/authentication_service.dart';
 import 'package:germeau_sateur/screens/createbarpage.dart';
+import 'package:germeau_sateur/screens/ordersoverviewpage.dart';
+
 import 'package:germeau_sateur/services/barservice.dart';
 
 import 'package:provider/provider.dart';

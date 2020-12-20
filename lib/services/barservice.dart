@@ -148,8 +148,9 @@ class BarService {
           }
         });
 
-        orders.add(new Order(
-            orderItems, order.data()['completed'], order.data()['table']));
+        Order _order = new Order.fromData(order.data(), order.id);
+        _order.setItems(orderItems);
+        orders.add(_order);
       }
     });
     return orders;
