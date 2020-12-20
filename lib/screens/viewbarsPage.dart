@@ -48,8 +48,8 @@ class _ViewBarPageState extends State<ViewBarPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ViewOrderPage(
-                                    snapshot.data[index].getId())));
+                                builder: (context) =>
+                                    MenuPage(snapshot.data[index].getId())));
                       },
                     ),
                   );

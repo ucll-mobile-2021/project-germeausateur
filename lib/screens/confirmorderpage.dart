@@ -71,6 +71,8 @@ class ConfirmOrderPage extends StatelessWidget {
 
                       context.read<BarService>().addOrderToBar(barid, order);
                       Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
                     },
                   )
                 ],
