@@ -50,6 +50,7 @@ class CreateBarPage extends StatelessWidget {
             );
             context.read<BarService>().createBar(bar, auth.currentUser.uid);
             Navigator.of(context).pop();
+            Navigator.of(context).pop();
           },
           child: Text('Create bar'),
         )

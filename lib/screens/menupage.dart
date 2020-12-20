@@ -53,6 +53,7 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   List<Item> orderList = [];
+  int totalitems = 0;
 
   void createOrderList() {
     orderList = [];
@@ -82,6 +83,7 @@ class _MenuPageState extends State<MenuPage> {
                 if (_counter[item.getId()] != 0) {
                   _counter.update(item.getId(), (i) => i - 1);
                   minustotal(item.getPrice());
+                  totalitems--;
                 }
               });
             },
@@ -98,6 +100,7 @@ class _MenuPageState extends State<MenuPage> {
                 if (_counter[item.getId()] != 25) {
                   _counter.update(item.getId(), (i) => i + 1);
                   addtotal(item.getPrice());
+                  totalitems++;
                 }
               });
             },
@@ -143,26 +146,27 @@ class _MenuPageState extends State<MenuPage> {
               "$price €",
               style: TextStyle(fontSize: 24),
             ),
-            RaisedButton(
-              onPressed: () {
-                createOrderList();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ConfirmOrderPage(
-                            counter: _counter,
-                            price: price,
-                            items: items,
-                            orderList: orderList,
-                            barid: _barId,
-                          )),
-                );
-              },
-              child: Text(
-                "Order",
-                style: new TextStyle(fontSize: 24),
+            if (totalitems != 0)
+              RaisedButton(
+                onPressed: () {
+                  createOrderList();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ConfirmOrderPage(
+                              counter: _counter,
+                              price: price,
+                              items: items,
+                              orderList: orderList,
+                              barid: _barId,
+                            )),
+                  );
+                },
+                child: Text(
+                  "Order",
+                  style: new TextStyle(fontSize: 24),
+                ),
               ),
-            ),
           ],
         ),
       ),

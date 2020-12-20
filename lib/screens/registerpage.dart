@@ -24,7 +24,6 @@ class RegisterPage extends StatelessWidget {
                   fillColor: Colors.grey[800],
                   filled: true,
                 ),
-                obscureText: true,
                 autocorrect: false,
                 enableSuggestions: false,
               ),
@@ -61,6 +60,7 @@ class RegisterPage extends StatelessWidget {
                       password: passwordController.text.trim(),
                       confirmPassword: password2Controller.text.trim(),
                     );
+                Navigator.of(context).pop();
               },
               child: Text('Register'),
             ),
