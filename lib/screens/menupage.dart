@@ -105,8 +105,6 @@ class _MenuPageState extends State<MenuPage> {
         ]));
   }
 
-  void quickfix() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -152,10 +150,12 @@ class _MenuPageState extends State<MenuPage> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => ConfirmOrderPage(
-                          counter: _counter,
-                          price: price,
-                          items: items,
-                          orderList: orderList)),
+                            counter: _counter,
+                            price: price,
+                            items: items,
+                            orderList: orderList,
+                            barid: _barId,
+                          )),
                 );
               },
               child: Text(

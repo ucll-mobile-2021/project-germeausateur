@@ -1,19 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:germeau_sateur/models/item.dart';
-import 'package:germeau_sateur/services/itemservice.dart';
+import 'package:germeau_sateur/models/order.dart';
+import 'package:germeau_sateur/services/barservice.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ConfirmOrderPage extends StatelessWidget {
   final TextEditingController tableController = TextEditingController();
-
+  final FirebaseAuth auth = FirebaseAuth.instance;
   List<Item> items = [];
 
   Map<String, int> counter = Map();
   double price;
-
+  String barid;
   List<Item> orderList = [];
+  List<Item> orderDBList = [];
 
-  ConfirmOrderPage({this.counter, this.price, this.items, this.orderList});
+  ConfirmOrderPage(
+      {this.counter, this.price, this.items, this.orderList, this.barid});
+
+  void ConvertToOrder() {
+    counter.forEach((element, value) {
+      for (int i = value; i != 0; i--) {
+        orderList.forEach((item) {
+          if (item.getId() == element) {
+            orderDBList.add(item);
+          }
+        });
+      }
+    });
+  }
 
   Widget makeWidget(Item item) {
     return ListTile(
@@ -35,7 +51,7 @@ class ConfirmOrderPage extends StatelessWidget {
     _showMaterialDialog() {
       showDialog(
           context: context,
-          builder: (_) => new AlertDialog(
+          builder: (context) => new AlertDialog(
                 title: new Text("Fill in table number"),
                 content: TextField(
                   controller: tableController,
@@ -46,7 +62,16 @@ class ConfirmOrderPage extends StatelessWidget {
                 actions: <Widget>[
                   FlatButton(
                     child: Text('Confirm'),
-                    onPressed: () {},
+                    onPressed: () {
+                      Order order = new Order(
+                        orderDBList,
+                        false,
+                        tableController.text.trim(),
+                      );
+
+                      context.read<BarService>().addOrderToBar(barid, order);
+                      Navigator.of(context).pop();
+                    },
                   )
                 ],
               ));
@@ -77,6 +102,7 @@ class ConfirmOrderPage extends StatelessWidget {
             ),
             RaisedButton(
               onPressed: () {
+                ConvertToOrder();
                 _showMaterialDialog();
               },
               child: Text(
