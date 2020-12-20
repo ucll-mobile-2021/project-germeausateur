@@ -17,10 +17,11 @@ class Bar{
       };
     }
 
-  Bar.fromData(Map<String, dynamic> data )
+  Bar.fromData(Map<String, dynamic> data , String barid)
     : _userid = data['userid'],
       _name = data['name'],
-      _description = data['description'];
+      _description = data['description'],
+      _barid = barid;
 
   static Bar fromMap(Map<String, dynamic> map, String id){
     if(map == null) return null;
