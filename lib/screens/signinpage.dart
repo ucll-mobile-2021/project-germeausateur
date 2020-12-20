@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:germeau_sateur/screens/guestpage.dart';
 import 'package:germeau_sateur/services/authentication_service.dart';
 import 'package:germeau_sateur/screens/registerpage.dart';
 import 'package:germeau_sateur/screens/menupage.dart';
@@ -59,6 +60,15 @@ class SignInPage extends StatelessWidget {
               );
             },
             child: Text('Register'),
+          ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => GuestPage()),
+              );
+            },
+            child: Text('Continue as Guest'),
           ),
         ],
       ),

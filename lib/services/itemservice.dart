@@ -21,9 +21,7 @@ class ItemService {
           items.add(Item.fromMap(item.data(), item.id));
         }
       });
-      print(
-          "DIKEFUCKERHIERBENIKDIKKEONZONZELAARXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-      print(items.length);
+      
       return items;
     } catch (e) {
       return e.message;
