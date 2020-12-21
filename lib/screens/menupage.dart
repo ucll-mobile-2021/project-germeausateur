@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:germeau_sateur/services/barservice.dart';
 import 'package:germeau_sateur/models/item.dart';
 import 'package:germeau_sateur/screens/confirmorderpage.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class MenuPage extends StatefulWidget {
   String _barid;
@@ -66,14 +67,18 @@ class _MenuPageState extends State<MenuPage> {
 
   Widget makeWidget(Item item) {
     return ListTile(
-        leading: Text("Image"),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[Text(item.getName()), Text(item.getPrice() + "€")],
+        leading: AutoSizeText(
+          item.getName(),
+          style: TextStyle(fontSize: 14),
+          minFontSize: 8,
+        ),
+        title: Text(
+          item.getPrice() + "€",
+          style: TextStyle(fontSize: 12),
         ),
         subtitle: Text(
           item.getSize() + "ml",
-          style: TextStyle(fontSize: 10),
+          style: TextStyle(fontSize: 8),
         ),
         trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
           IconButton(
