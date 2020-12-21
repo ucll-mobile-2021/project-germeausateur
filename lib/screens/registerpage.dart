@@ -69,7 +69,8 @@ class RegisterPage extends StatelessWidget {
                     passwordController.text.isNotEmpty &&
                     password2Controller.text.isNotEmpty &&
                     passwordController.text == password2Controller.text &&
-                    isEmail(emailController.text)) {
+                    isEmail(emailController.text) &&
+                    passwordController.text.length > 5) {
                   context.read<AuthenticationService>().signUp(
                         email: emailController.text.trim(),
                         password: passwordController.text.trim(),
