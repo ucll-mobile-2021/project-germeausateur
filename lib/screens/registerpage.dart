@@ -7,6 +7,15 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController password2Controller = TextEditingController();
 
+  bool isEmail(String em) {
+    String p =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+    RegExp regExp = new RegExp(p);
+
+    return regExp.hasMatch(em);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +68,8 @@ class RegisterPage extends StatelessWidget {
                 if (emailController.text.isNotEmpty &&
                     passwordController.text.isNotEmpty &&
                     password2Controller.text.isNotEmpty &&
-                    passwordController.text == password2Controller.text) {
+                    passwordController.text == password2Controller.text &&
+                    isEmail(emailController.text)) {
                   context.read<AuthenticationService>().signUp(
                         email: emailController.text.trim(),
                         password: passwordController.text.trim(),

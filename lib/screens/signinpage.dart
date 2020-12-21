@@ -11,6 +11,15 @@ class SignInPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  bool isEmail(String em) {
+    String p =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+    RegExp regExp = new RegExp(p);
+
+    return regExp.hasMatch(em);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +55,8 @@ class SignInPage extends StatelessWidget {
           RaisedButton(
             onPressed: () {
               if (emailController.text.isNotEmpty &&
-                  passwordController.text.isNotEmpty) {
+                  passwordController.text.isNotEmpty &&
+                  isEmail(emailController.text)) {
                 context.read<AuthenticationService>().signIn(
                       email: emailController.text.trim(),
                       password: passwordController.text.trim(),
@@ -57,7 +67,7 @@ class SignInPage extends StatelessWidget {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Text('Invalid input'),
-                        content: Text('Email and password cannot be empty'),
+                        content: Text('Something went wrong'),
                         actions: [
                           FlatButton(
                             child: Text('OK'),
