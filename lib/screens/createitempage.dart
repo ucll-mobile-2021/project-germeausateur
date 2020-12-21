@@ -12,6 +12,13 @@ class CreateItemPage extends StatelessWidget {
   final TextEditingController sizeController = TextEditingController();
   final FirebaseAuth auth = FirebaseAuth.instance;
 
+  bool isvalid(String em) {
+    String p = r'/\*(?:\*(?:\.\*\*|\*\*|\*)?|\.\*\*)?/';
+    RegExp regExp = new RegExp(p);
+
+    return regExp.hasMatch(em);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +42,9 @@ class CreateItemPage extends StatelessWidget {
           margin: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 10),
           child: TextFormField(
             inputFormatters: [
-              LengthLimitingTextInputFormatter(4),
-              FilteringTextInputFormatter.deny(RegExp(r','))
+              LengthLimitingTextInputFormatter(5),
+              FilteringTextInputFormatter.deny(RegExp(r',')),
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
             ],
             keyboardType: TextInputType.numberWithOptions(decimal: true),
             maxLines: null,
@@ -54,7 +62,8 @@ class CreateItemPage extends StatelessWidget {
           child: TextFormField(
             inputFormatters: [
               LengthLimitingTextInputFormatter(4),
-              FilteringTextInputFormatter.deny(RegExp(r','))
+              FilteringTextInputFormatter.deny(RegExp(r',')),
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
             ],
             keyboardType: TextInputType.number,
             maxLines: null,

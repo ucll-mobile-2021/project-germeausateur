@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:germeau_sateur/models/item.dart';
 import 'package:germeau_sateur/models/order.dart';
@@ -53,7 +54,12 @@ class ConfirmOrderPage extends StatelessWidget {
           context: context,
           builder: (context) => new AlertDialog(
                 title: new Text("Fill in table number"),
-                content: TextField(
+                content: TextFormField(
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    LengthLimitingTextInputFormatter(3),
+                  ],
+                  keyboardType: TextInputType.number,
                   controller: tableController,
                   decoration: InputDecoration(
                     labelText: 'table number',
@@ -61,20 +67,40 @@ class ConfirmOrderPage extends StatelessWidget {
                 ),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('Confirm'),
-                    onPressed: () {
-                      Order order = new Order(
-                        orderDBList,
-                        false,
-                        tableController.text.trim(),
-                      );
+                      child: Text('Confirm'),
+                      onPressed: () {
+                        if (tableController.text.isNotEmpty) {
+                          Order order = new Order(
+                            orderDBList,
+                            false,
+                            tableController.text.trim(),
+                          );
 
-                      context.read<BarService>().addOrderToBar(barid, order);
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                    },
-                  )
+                          context
+                              .read<BarService>()
+                              .addOrderToBar(barid, order);
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Invalid input'),
+                                  content: Text('Table number cannot be empty'),
+                                  actions: [
+                                    FlatButton(
+                                      child: Text('OK'),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    )
+                                  ],
+                                );
+                              });
+                        }
+                      })
                 ],
               ));
     }
