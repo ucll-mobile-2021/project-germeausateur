@@ -59,13 +59,25 @@ class CreateItemPage extends StatelessWidget {
         ),
         RaisedButton(
           onPressed: () {
-            Item item = new Item(
+            if(nameController.text.isNotEmpty && sizeController.text.isNotEmpty && priceController.text.isNotEmpty){
+              Item item = new Item(
               nameController.text.trim(),
               priceController.text.trim(),
               sizeController.text.trim(),
             );
             context.read<BarService>().createItem(item, auth.currentUser.uid);
             Navigator.of(context).pop();
+            }else{
+              showDialog(context: context,
+                builder: (BuildContext context){
+                  return AlertDialog(title: Text('Invalid input'), 
+                    content: Text('Name, size and price cannot be empty'),
+                    actions: [
+                      FlatButton(child: Text('OK'),
+                        onPressed: (){Navigator.pop(context);},)
+                    ],);
+                });
+            }
           },
           child: Text('Add item'),
         ),

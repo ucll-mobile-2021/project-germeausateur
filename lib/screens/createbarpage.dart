@@ -14,6 +14,8 @@ class CreateBarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(title: Text('Create Bar'),
+        ),
         body: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -43,14 +45,26 @@ class CreateBarPage extends StatelessWidget {
         ),
         RaisedButton(
           onPressed: () {
-            Bar bar = new Bar(
+            if(nameController.text.isNotEmpty && descriptionController.text.isNotEmpty){
+              Bar bar = new Bar(
               auth.currentUser.uid,
               nameController.text.trim(),
               descriptionController.text.trim(),
-            );
-            context.read<BarService>().createBar(bar, auth.currentUser.uid);
-            Navigator.of(context).pop();
-            Navigator.of(context).pop();
+              );
+              context.read<BarService>().createBar(bar, auth.currentUser.uid);
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            }else{
+              showDialog(context: context,
+                builder: (BuildContext context){
+                  return AlertDialog(title: Text('Invalid input'), 
+                    content: Text('Name & description cannot be empty'),
+                    actions: [
+                      FlatButton(child: Text('OK'),
+                        onPressed: (){Navigator.pop(context);},)
+                    ],);
+                });
+            }
           },
           child: Text('Create bar'),
         )
