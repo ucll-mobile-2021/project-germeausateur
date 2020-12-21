@@ -18,6 +18,7 @@ class RegisterPage extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(bottom: 10.0),
               child: TextFormField(
+                autovalidate: true,
                 controller: emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
@@ -55,12 +56,34 @@ class RegisterPage extends StatelessWidget {
             ),
             RaisedButton(
               onPressed: () {
-                context.read<AuthenticationService>().signUp(
-                      email: emailController.text.trim(),
-                      password: passwordController.text.trim(),
-                      confirmPassword: password2Controller.text.trim(),
-                    );
-                Navigator.of(context).pop();
+                if (emailController.text.isNotEmpty &&
+                    passwordController.text.isNotEmpty &&
+                    password2Controller.text.isNotEmpty &&
+                    passwordController.text == password2Controller.text) {
+                  context.read<AuthenticationService>().signUp(
+                        email: emailController.text.trim(),
+                        password: passwordController.text.trim(),
+                        confirmPassword: password2Controller.text.trim(),
+                      );
+                  Navigator.of(context).pop();
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Invalid input'),
+                          content: Text('Something went wrong'),
+                          actions: [
+                            FlatButton(
+                              child: Text('OK'),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            )
+                          ],
+                        );
+                      });
+                }
               },
               child: Text('Register'),
             ),

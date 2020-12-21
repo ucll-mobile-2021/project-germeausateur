@@ -45,10 +45,30 @@ class SignInPage extends StatelessWidget {
           ),
           RaisedButton(
             onPressed: () {
-              context.read<AuthenticationService>().signIn(
-                    email: emailController.text.trim(),
-                    password: passwordController.text.trim(),
-                  );
+              if (emailController.text.isNotEmpty &&
+                  passwordController.text.isNotEmpty) {
+                context.read<AuthenticationService>().signIn(
+                      email: emailController.text.trim(),
+                      password: passwordController.text.trim(),
+                    );
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Invalid input'),
+                        content: Text('Email and password cannot be empty'),
+                        actions: [
+                          FlatButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          )
+                        ],
+                      );
+                    });
+              }
             },
             child: Text('Sign in'),
           ),
