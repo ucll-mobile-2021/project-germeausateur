@@ -45,7 +45,7 @@ class CreateBarPage extends StatelessWidget {
         ),
         RaisedButton(
           onPressed: () {
-            if(nameController.text.isNotEmpty && descriptionController.text.isNotEmpty){
+            if(nameController.text.isNotEmpty && descriptionController.text.isNotEmpty && nameController.text.length <=15){
               Bar bar = new Bar(
               auth.currentUser.uid,
               nameController.text.trim(),
@@ -58,7 +58,7 @@ class CreateBarPage extends StatelessWidget {
               showDialog(context: context,
                 builder: (BuildContext context){
                   return AlertDialog(title: Text('Invalid input'), 
-                    content: Text('Name & description cannot be empty'),
+                    content: Text('Name & description cannot be empty or too long'),
                     actions: [
                       FlatButton(child: Text('OK'),
                         onPressed: (){Navigator.pop(context);},)

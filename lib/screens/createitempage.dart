@@ -80,7 +80,8 @@ class CreateItemPage extends StatelessWidget {
           onPressed: () {
             if (nameController.text.isNotEmpty &&
                 sizeController.text.isNotEmpty &&
-                priceController.text.isNotEmpty) {
+                priceController.text.isNotEmpty &&
+                nameController.text.length <= 15) {
               Item item = new Item(
                 nameController.text.trim(),
                 priceController.text.trim(),
@@ -94,7 +95,7 @@ class CreateItemPage extends StatelessWidget {
                   builder: (BuildContext context) {
                     return AlertDialog(
                       title: Text('Invalid input'),
-                      content: Text('Name, size and price cannot be empty'),
+                      content: Text('Name, size and price cannot be empty or too long'),
                       actions: [
                         FlatButton(
                           child: Text('OK'),
