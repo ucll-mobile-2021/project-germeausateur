@@ -99,6 +99,13 @@ class MyBarPage extends StatelessWidget {
                         },
                         child: Text('Add item to Menu'),
                       ),
+                      RaisedButton(
+                        onPressed: () {
+                          service.deleteBar(snapshot.data.getId());
+                          Navigator.pop(context);
+                        },
+                        child: Text('Delete my bar'),
+                      ),
                     ],
                   );
                 }

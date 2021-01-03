@@ -224,4 +224,8 @@ Future<List<Item>> getItemsFromOrder(String orderid, String barid) async {
     });
     return orders;
   }
+
+  Future<void> deleteBar(String barid) async {
+    await colRef.doc(barid).delete();
+  }
 }
