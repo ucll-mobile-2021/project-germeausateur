@@ -33,7 +33,7 @@ class _ViewOrderPageState extends State<ViewOrderPage> {
   static List<Order> orders = [];
 
   Future loadOrders(String barid) async {
-    var out = await service.getOrdersFromBar(barid);
+    var out = await service.getOrdersFromBar2(barid);
     orders = out;
     return out;
   }

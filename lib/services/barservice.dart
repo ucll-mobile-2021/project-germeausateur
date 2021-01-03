@@ -119,6 +119,8 @@ class BarService {
   }
 
 
+
+
   Future<List<Order>> getOrdersFromBar(String barid) async {
     List<Order> orders = [];
 
@@ -154,6 +156,7 @@ class BarService {
         orders.add(_order);
       }
     });
+
     return orders;
   }
   Future<Bar> getBarObjFromUser(String uid) async {
@@ -164,5 +167,61 @@ class BarService {
       }
     });
     return bar;
+  }
+
+
+
+
+
+
+
+Future<List<Item>> getItemsFromOrder(String orderid, String barid) async {
+  List<Item> orderItems = [];
+        //get alle itemsid's van die order
+        await colRef
+            .doc(barid)
+            .collection("orders")
+            .doc(orderid)
+            .collection('items')
+            .get()
+            .then((value) async {
+          for (DocumentSnapshot snapshot in value.docs) {
+            String iid = snapshot.data()['itemid'];
+
+            //get alle items van een menu
+            await getMenuFromBar(barid).then((value) {
+              //itemid van order linken met item van menu
+              for (Item item in value) {
+                if (iid == item.getId()) {
+                  orderItems.add(item);
+                }
+              }
+            });
+          }
+        });
+       
+    return orderItems;
+}
+
+
+
+
+
+
+
+  Future<List<Order>> getOrdersFromBar2(String barid) async {
+    List<Order> orders = [];
+
+    //get alle orders
+    await colRef.doc(barid).collection("orders").get().then((value) async {
+      for (DocumentSnapshot order in value.docs) {
+
+        //get alle itemsid's van die order
+
+        Order _order = new Order.fromData(order.data(), order.id);
+        orders.add(_order);
+      }
+    });
+    return orders;
   }
 }
