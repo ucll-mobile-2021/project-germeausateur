@@ -5,20 +5,49 @@ import 'package:germeau_sateur/models/order.dart';
 import 'package:germeau_sateur/services/barservice.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class DetailOrderPage extends StatelessWidget {
-  final FirebaseAuth auth = FirebaseAuth.instance;
+final BarService service = new BarService();
+final FirebaseAuth auth = FirebaseAuth.instance;
 
-  Order order;
-  String barId;
+class DetailOrderPage extends StatefulWidget {
+  String _orderid;
+  String _barid;
   //List<Item> itemsInOrder = order.getItems();
 
-  DetailOrderPage({this.order, this.barId});
+  DetailOrderPage(String orderid, String barid) {
+    _orderid = orderid;
+    _barid = barid;
+  }
+
+  @override
+  _DetailOrderPageState createState() =>
+      _DetailOrderPageState.initialize(_orderid, _barid);
+}
+// DetailOrderPage({this.order, this.barId});
+
+class _DetailOrderPageState extends State<DetailOrderPage> {
+  _DetailOrderPageState() : super();
+
+  String _orderId;
+  String _barId;
+
+  _DetailOrderPageState.initialize(String orderid, String barid) {
+    _orderId = orderid;
+    _barId = barid;
+  }
+
+  static List<Item> order = [];
+
+  Future loadItemsFromOrder(String orderid, String barid) async {
+    var out = await service.getItemsFromOrder(orderid, barid);
+    order = out;
+    return out;
+  }
+
   Map<Item, int> count = Map();
   List<Item> DistinctItems = [];
 
   void toCount() {
-    List<Item> orders = order.getItems();
-    orders.forEach((item) {
+    order.forEach((item) {
       if (count.containsKey(item)) {
         count.update(item, (i) => i + 1);
       } else {
@@ -43,27 +72,31 @@ class DetailOrderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Order Details              " + order.getTable()),
-      ),
-      body: Container(
-          child: ListView.builder(
-        itemCount: order.getItems().length,
-        itemBuilder: (context, index) {
-          return makeWidget(order.getItems()[index]);
-        },
-      )),
-      /*  bottomNavigationBar: BottomAppBar(
-        child: RaisedButton(
-          onPressed: () {
-            context.read<BarService>().setOrderToComplete(barId, order.getId());
-          },
-          child: Text(
-            "Confirm Order",
-          ),
+        appBar: AppBar(
+          title: Text("Order Details"),
         ),
-      ),
-    */
-    );
+        body: Container(
+            child: FutureBuilder(
+          future: loadItemsFromOrder(_orderId, _barId),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: order.length,
+                itemBuilder: (context, index) {
+                  print(
+                      "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+                  print(order.length);
+                  return makeWidget(order[index]);
+                },
+              );
+            }
+          },
+        )));
   }
 }

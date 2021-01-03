@@ -93,8 +93,7 @@ class _ViewOrderPageState extends State<ViewOrderPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => DetailOrderPage(
-                                        order: snapshot.data[index],
-                                        barId: _barId)),
+                                        snapshot.data[index].getId(), _barId)),
                               );
                             },
                           ),
